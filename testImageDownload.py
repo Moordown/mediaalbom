@@ -1,6 +1,6 @@
 import unittest
 import imWindow as imWin
-
+import cv2
 
 class ImageDownload(unittest.TestCase):
     def setUp(self):
@@ -15,17 +15,6 @@ class ImageDownload(unittest.TestCase):
             list(imWin.get_files_from(self.extentions, self.image_path[:-2])),
             self.image_names
         )
-
-    def testCorrectResize(self):
-        embedding_size = (300, 300)
-
-        count = 0
-        for image in imWin.get_resized_images(self.image_path[:-2], *embedding_size):
-            self.assertLessEqual(image.shape[:2], embedding_size,
-                             "error with image {}. Expect embedding in {}, got {}".format(
-                                 self.image_names[count], embedding_size, image.shape[:2]
-                             ))
-            count += 1
 
 
 if __name__ == '__main__':

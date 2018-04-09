@@ -6,6 +6,13 @@ from itertools import chain, starmap
 from functools import partial
 
 
+IMAGE_PATH = ".\\images\\{}"
+IMAGE_NAMES = [IMAGE_PATH.format(i) for i in [
+    'bat1.jpg', 'bike.jpg', 'moustache.jpg', 'pink.jpg', 'silver1.jpg'
+]]
+EXTENTIONS = ['.png', '.jpg']
+
+
 def iter_filenames(path):
     """Возвращает итератор по всем файлам в дирректории и поддиректориях"""
     return chain.from_iterable(
@@ -35,15 +42,3 @@ def get_images_array(path):
         yield cv2.imread(im_name, 1)
 
 
-def get_resized_images(path: str, x: int, y: int):
-    """Возвращает картинку, которая будет входить в заданный размер"""
-    for im_array in get_images_array(path):
-        dx, dy = im_array.shape[1] - x, im_array.shape[0] - y
-        if dx <= 0 and dy <= 0:
-            yield im_array
-        else:
-            if dx < dy:
-                new_size = (x, x / im_array.shape[1])
-            else:
-                new_size = (y / im_array.shape[0], y)
-            yield cv2.resize(src=im_array, dsize=new_size)
